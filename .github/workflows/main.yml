@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PAT }}
 
-      - name: Build and push api Docker image
+      - name: Build and push API Docker images
         id: push_api_image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest -f Dockerfile .
@@ -35,25 +35,26 @@ jobs:
           ssh-username: ${{ secrets.SSH_USERNAME }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Generate Laravel APP_KEY
+        id: generate_app_key
+        run: |
+          APP_KEY=$(docker compose exec laravel_app php artisan key:generate --show)
+          echo "APP_KEY=${APP_KEY}" >> $GITHUB_ENV
 
       - name: Deploy Backend with Docker Compose
         if: steps.push_api_image.conclusion == 'success'
-        run: |
-          echo "Deploying backend..."
-          docker context use remote
-          docker compose -f docker-compose.yml pull
-          docker compose -f docker-compose.yml up -d --build
-          env:
+        env:
           APP_ENV: production
           APP_DEBUG: false
-          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_KEY: ${{ env.APP_KEY }}
           DB_CONNECTION: mysql
           DB_HOST: mysql
           DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      - name: Generate Laravel APP_KEY
         run: |
-          docker compose exec laravel_app php artisan key:generate --show
-        id: generate_app_key
+          echo "Deploying backend..."
+          docker context use remote
+          docker compose -f docker-compose.yml pull
+          docker compose -f docker-compose.yml up -d --build
