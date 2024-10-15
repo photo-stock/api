@@ -34,7 +34,7 @@ jobs:
           ssh-host: ${{ secrets.SSH_HOST }}
           ssh-username: ${{ secrets.SSH_USERNAME }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-     y
+
 
       - name: Deploy Backend with Docker Compose
         if: steps.push_api_image.conclusion == 'success'
