@@ -20,12 +20,10 @@ services:
             timeout: 10s
             retries: 5
 
-    laravel_app:
-        image: alonecat/photo-stock-api
-        build:
-            context: .
-            dockerfile: Dockerfile
+    app:
         container_name: laravel_app
+        image: alonecat/photo-stock-api
+
         environment:
             - APP_ENV=production
             - APP_DEBUG=false
@@ -50,9 +48,6 @@ services:
 
     nginx:
         image: alonecat/photo-stock-api-nginx
-        build:
-            context: ./nginx
-            dockerfile: Dockerfile
         container_name: laravel_nginx
         restart: unless-stopped
         ports:
