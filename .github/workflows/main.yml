@@ -59,4 +59,4 @@ jobs:
         id: generate_app_key
         run: |
           APP_KEY=$(docker compose exec laravel_app php artisan key:generate --show)
-          echo "APP_KEY=${APP_KEY}" >> $GITHUB_ENV
+
