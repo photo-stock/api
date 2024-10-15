@@ -1,0 +1,41 @@
+name: Build and deploy backend
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PAT }}
+
+      - name: Build and push api Docker image
+        id: push_api_image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest -f Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest
+
+      - name: Set up SSH for remote Docker Compose
+        uses: amirmarmul/docker-context-ssh-action@v1
+        with:
+          ssh-host: ${{ secrets.SSH_HOST }}
+          ssh-username: ${{ secrets.SSH_USERNAME }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy Backend with Docker Compose
+        if: steps.push_backend_image.conclusion == 'success'
+        run: |
+          echo "Deploying backend..."
+          docker context use remote
+          docker-compose -f docker-compose.yml pull
+          docker-compose -f docker-compose.yml up -d --build
