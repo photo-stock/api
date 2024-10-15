@@ -16,7 +16,7 @@ services:
             - laravel_network
 
     laravel_app:
-        image: photo-stock-api
+        image: alonecat/photo-stock-api
         build:
             context: .
             dockerfile: Dockerfile
@@ -41,7 +41,7 @@ services:
             - mysql
 
     nginx:
-        image: photo-stock-api-nginx
+        image: alonecat/photo-stock-api-nginx
         build:
             context: ./nginx
             dockerfile: Dockerfile
