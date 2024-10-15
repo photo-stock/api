@@ -44,7 +44,7 @@ services:
         ports:
             - "9000:9000"
         networks:
-            - backend-network
+            - laravel_network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:9000" ]
             interval: 30s
