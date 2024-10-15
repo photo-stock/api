@@ -37,5 +37,5 @@ jobs:
         run: |
           echo "Deploying backend..."
           docker context use remote
-          docker-compose -f docker-compose.yml pull
-          docker-compose -f docker-compose.yml up -d --build
+          docker compose -f docker-compose.yml pull
+          docker compose -f docker-compose.yml up -d --build
