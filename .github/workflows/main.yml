@@ -25,6 +25,9 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest -f Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest
 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-nginx:latest -f nginx/Dockerfile ./nginx
+          docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-nginx:latest
+
       - name: Set up SSH for remote Docker Compose
         uses: amirmarmul/docker-context-ssh-action@v1
         with:
