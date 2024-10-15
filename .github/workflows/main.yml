@@ -35,11 +35,7 @@ jobs:
           ssh-username: ${{ secrets.SSH_USERNAME }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Generate Laravel APP_KEY
-        id: generate_app_key
-        run: |
-          APP_KEY=$(docker compose exec laravel_app php artisan key:generate --show)
-          echo "APP_KEY=${APP_KEY}" >> $GITHUB_ENV
+
 
       - name: Deploy Backend with Docker Compose
         if: steps.push_api_image.conclusion == 'success'
@@ -58,3 +54,9 @@ jobs:
           docker context use remote
           docker compose -f docker-compose.yml pull
           docker compose -f docker-compose.yml up -d --build
+
+      - name: Generate Laravel APP_KEY
+        id: generate_app_key
+        run: |
+          APP_KEY=$(docker compose exec laravel_app php artisan key:generate --show)
+          echo "APP_KEY=${APP_KEY}" >> $GITHUB_ENV
