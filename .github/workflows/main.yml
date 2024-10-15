@@ -51,10 +51,20 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           echo "Deploying backend..."
-          docker context use remote
-          docker compose down
-          #docker compose pull
-          docker compose up -d
+           docker context use remote
+
+          # Stop and remove all containers
+          docker compose down --remove-orphans
+
+          # Remove unused images and volumes to ensure freshness
+          docker image prune -f
+          docker volume prune -f
+
+          # Pull the latest images
+          docker compose pull
+
+          # Build and start the containers
+          docker compose up -d --build
 
           echo "Setting permissions for storage and cache..."
           docker compose exec laravel_app bash -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache"
