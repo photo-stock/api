@@ -33,7 +33,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy Backend with Docker Compose
-        if: steps.push_backend_image.conclusion == 'success'
+        if: steps.push_api_image.conclusion == 'success'
         run: |
           echo "Deploying backend..."
           docker context use remote
