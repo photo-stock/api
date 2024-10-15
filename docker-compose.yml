@@ -72,8 +72,8 @@ services:
 
 networks:
     laravel_network:
-        driver: overlay
-        attachable: true
+        external: true
+        name: photo-stack_laravel_network
 
 volumes:
     mysql_data:
