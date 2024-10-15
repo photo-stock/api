@@ -10,18 +10,17 @@ services:
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${DB_ROOT_PASSWORD}" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
         volumes:
             - mysql_data:/var/lib/mysql
         networks:
             - laravel_network
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            interval: 30s
-            timeout: 10s
-            retries: 5
 
-    app:
-        container_name: app
+    laravel_app:
         image: alonecat/photo-stock-api
 
         environment:
@@ -35,39 +34,47 @@ services:
             - DB_USERNAME=${DB_USERNAME}
             - DB_PASSWORD=${DB_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: any
         volumes:
             - ./storage:/var/www/html/storage
             - ./bootstrap/cache:/var/www/html/bootstrap/cache
-        depends_on:
-            - mysql
+        ports:
+            - "9000:9000"
+        networks:
+            - backend-network
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost/public/health-check"]  # Замените на реальный путь вашего эндпоинта проверки состояния
+            test: [ "CMD", "curl", "-f", "http://localhost:9000" ]
             interval: 30s
+            retries: 3
+            start_period: 30s
             timeout: 10s
-            retries: 5
 
     nginx:
         image: alonecat/photo-stock-api-nginx
-        container_name: laravel_nginx
-        restart: unless-stopped
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
         ports:
             - "8080:8080"
-        volumes:
-            - ./nginx:/etc/nginx/conf.d:ro
-        depends_on:
-            - app
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8080"]  # Проверяем доступность Nginx
-            interval: 30s
-            timeout: 10s
-            retries: 5
         networks:
             - laravel_network
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://laravel_app:9000" ]
+            interval: 30s
+            retries: 3
+            start_period: 30s
+            timeout: 10s
+
 
 networks:
     laravel_network:
-        driver: bridge
+        driver: overlay
+        attachable: true
 
 volumes:
     mysql_data:
-        driver: local
+        external: true
