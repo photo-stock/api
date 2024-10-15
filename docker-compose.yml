@@ -55,7 +55,7 @@ services:
         volumes:
             - ./nginx:/etc/nginx/conf.d:ro
         depends_on:
-            - laravel_app
+            - app
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:8080"]  # Проверяем доступность Nginx
             interval: 30s
