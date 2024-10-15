@@ -55,6 +55,11 @@ jobs:
           docker compose -f docker-compose.yml pull
           docker compose -f docker-compose.yml up -d --build
 
+          echo "Setting permissions for storage and cache..."
+          docker compose exec laravel_app bash -c "chown -R www-data:www-data /path/to/your/laravel/storage /path/to/your/laravel/bootstrap/cache"
+          docker compose exec laravel_app bash -c "chmod -R 775 /path/to/your/laravel/storage /path/to/your/laravel/bootstrap/cache"
+
+
       - name: Generate Laravel APP_KEY
         id: generate_app_key
         run: |
