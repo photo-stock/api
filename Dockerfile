@@ -16,9 +16,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
-
 EXPOSE 9000
 
-CMD ["./wait-for-it.sh", "mysql:3306", "--", "php-fpm"]
+ENTRYPOINT ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done; php-fpm"]
