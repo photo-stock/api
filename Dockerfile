@@ -16,6 +16,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
+
 EXPOSE 9000
 
-ENTRYPOINT ["sh", "-c", "until mysqladmin ping -h mysql --silent; do sleep 1; done; php-fpm"]
+CMD ["php-fpm"]
