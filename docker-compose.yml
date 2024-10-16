@@ -1,4 +1,4 @@
-name: photo-stock
+version: "3.8"
 
 services:
     mysql:
@@ -44,7 +44,7 @@ services:
             restart_policy:
                 condition: on-failure
         depends_on:
-            - mysql  # Убрали условия
+            - mysql
 
 networks:
     api_network:
