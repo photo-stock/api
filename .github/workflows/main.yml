@@ -50,7 +50,6 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
-          run: |
           echo "Deploying stack..."
           docker context use remote
            # Stop and remove all containers
