@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 9000
 
-ENTRYPOINT ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done; php-fpm"]
+ENTRYPOINT ["sh", "-c", "until mysqladmin ping -h mysql --silent; do sleep 1; done; php-fpm"]
