@@ -21,7 +21,7 @@ services:
             - api_network
 
     app:
-        image: alonecat/photo-stock-api:latest
+        image: alonecat/photo-stock-api-1:latest
         build:
             context: .
             dockerfile: Dockerfile
