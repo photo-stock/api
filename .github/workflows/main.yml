@@ -25,8 +25,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest -f Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest
 
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-nginx:latest -f nginx/Dockerfile ./nginx
-          docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-nginx:latest
 
       - name: Set up SSH for remote Docker Compose
         uses: amirmarmul/docker-context-ssh-action@v1
@@ -35,25 +33,22 @@ jobs:
           ssh-username: ${{ secrets.SSH_USERNAME }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-
-
       - name: Deploy Backend with Docker Compose
         if: steps.push_api_image.conclusion == 'success'
         env:
-          APP_ENV: production
-          APP_DEBUG: true
-          APP_KEY: ${{ env.APP_KEY }}
-          DB_CONNECTION: mysql
-          DB_HOST: mysql
-          DB_PORT: 3306
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           echo "Deploying stack..."
           docker context use remote
-           # Stop and remove all containers
-          docker compose down --remove-orphans
+
+          if docker stack ls | grep -q "photo-stack"; then
+            echo "Stack exists. Removing..."
+            docker stack remove photo-stack
+            else
+            echo "No existing stack found. Proceeding to deploy new stack."
+          fi
 
           # Remove unused images and volumes to ensure freshness
           docker image prune -f
