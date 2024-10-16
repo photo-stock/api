@@ -59,3 +59,12 @@ jobs:
 
           docker stack deploy --prune -c docker-compose.yml photo-stack
 
+      - name: Run Migrations
+        if: steps.push_api_image.conclusion == 'success'
+        env:
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          echo "Running migrations..."
+          docker exec -it <container_name> php artisan migrate --force
