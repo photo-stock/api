@@ -48,7 +48,7 @@ services:
 
 networks:
     api_network:
-        driver: bridge
+        driver: overlay
 
 volumes:
     mysql_data:
