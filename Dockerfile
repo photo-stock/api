@@ -21,4 +21,4 @@ RUN ls -la /var/www/html
 
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["php-fpm"]
