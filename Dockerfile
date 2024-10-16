@@ -18,7 +18,8 @@ COPY . .
 
 RUN ls -la /var/www/html
 
+RUN php artisan migrate --force
 
 EXPOSE 9000
 
-ENTRYPOINT ["php-fpm"]
+CMD ["php-fpm"]
