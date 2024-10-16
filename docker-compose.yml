@@ -26,7 +26,8 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - .:/var/www/html
+            - app_storage:/var/www/html/storage
+            - app_cache:/var/www/html/bootstrap/cache
         networks:
             - api_network
         environment:
@@ -52,3 +53,5 @@ networks:
 
 volumes:
     mysql_data:
+    app_storage:
+    app_cache:
