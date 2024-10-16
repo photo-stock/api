@@ -44,8 +44,7 @@ services:
             restart_policy:
                 condition: on-failure
         depends_on:
-            mysql:
-                condition: service_healthy
+            - mysql  # Убрали условия
 
 networks:
     api_network:
