@@ -22,8 +22,8 @@ jobs:
       - name: Build and push API Docker images
         id: push_api_image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest -f Dockerfile .
-          docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-1:latest -f Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-1:latest
 
 
       - name: Set up SSH for remote Docker Compose
