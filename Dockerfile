@@ -16,6 +16,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
+RUN ls -la /var/www/html
+
 
 EXPOSE 9000
 

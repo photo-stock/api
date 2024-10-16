@@ -26,6 +26,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/photo-stock-api-1:latest
 
 
+
       - name: Set up SSH for remote Docker Compose
         uses: amirmarmul/docker-context-ssh-action@v1
         with:
