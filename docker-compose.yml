@@ -18,7 +18,7 @@ services:
         volumes:
             - mysql_data:/var/lib/mysql
         networks:
-            - laravel_network
+            - api_network
 
     laravel_app:
         image: alonecat/photo-stock-api
@@ -44,7 +44,7 @@ services:
         ports:
             - "9000:9000"
         networks:
-            - laravel_network
+            - api_network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:9000" ]
             interval: 30s
@@ -61,7 +61,7 @@ services:
         ports:
             - "8080:8080"
         networks:
-            - laravel_network
+            - api_network
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://laravel_app:9000" ]
             interval: 30s
@@ -71,9 +71,8 @@ services:
 
 
 networks:
-    laravel_network:
+    api_network:
         external: true
-        name: photo-stack_laravel_network
 
 volumes:
     mysql_data:
