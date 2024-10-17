@@ -23,7 +23,6 @@ RUN touch /var/www/html/storage/logs/laravel.log && chown www-data:www-data /var
 
 #RUN ls -la /var/www/html/storage /var/www/html/bootstrap/cache
 
-RUN php artisan key:generate
 
 RUN php artisan migrate --force
 
