@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    && docker-php-ext-install pdo pdo_mysql zip
+    && docker-php-ext-install pdo pdo_mysql zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
@@ -18,9 +19,8 @@ COPY . .
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-
-RUN php artisan migrate --force
-
+# Laravel оптимизация
+RUN php artisan config:cache && php artisan route:cache
 
 EXPOSE 9000
 
