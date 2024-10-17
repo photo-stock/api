@@ -46,6 +46,22 @@ services:
                 condition: on-failure
         depends_on:
             - mysql
+    nginx:
+        image: alonecat/photo-stock-nginx-1:latest
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        ports:
+            - "8080:8080"
+        networks:
+            - api_network
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://app:9000" ]
+            interval: 30s
+            retries: 3
+            start_period: 30s
+            timeout: 10s
 
 networks:
     api_network:
