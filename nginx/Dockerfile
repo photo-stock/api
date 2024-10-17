@@ -5,6 +5,6 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN apt-get update && apt-get install -y iputils-ping netcat
+RUN apk add --no-cache iputils bash busybox-extras
 
 CMD ["sh", "-c", "while :; do sleep 1; done"]
