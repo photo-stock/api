@@ -50,6 +50,9 @@ jobs:
           SESSION_PATH: /
           SESSION_DOMAIN: 217.18.60.27
         run: |
+          echo "APP_KEY: $APP_KEY"
+          echo "DB_DATABASE: $DB_DATABASE"
+          echo "SESSION_DRIVER: $SESSION_DRIVER"
           echo "Deploying stack..."
           docker context use remote
 
