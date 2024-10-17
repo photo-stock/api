@@ -16,7 +16,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
-RUN chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 #RUN ls -la /var/www/html/storage /var/www/html/bootstrap/cache
 
