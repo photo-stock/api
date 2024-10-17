@@ -25,8 +25,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        ports:
-            - "9000:9000"
+       # ports:
+        #    - "9000:9000"
         volumes:
             - app_storage:/var/www/html/storage
             - app_cache:/var/www/html/bootstrap/cache
