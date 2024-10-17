@@ -16,12 +16,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-RUN chown -R www-data:www-data /var/www/html
-
-RUN touch /var/www/html/storage/logs/laravel.log && chown www-data:www-data /var/www/html/storage/logs/laravel.log
+RUN chmod -R 755 /var/www/html
 
 #RUN ls -la /var/www/html/storage /var/www/html/bootstrap/cache
 
