@@ -8,6 +8,11 @@ Route::get('/', function () {
 });
 
 Route::get('/env', function () {
+    // Получаем все переменные окружения из конфигурации
+    $envVariables = collect($_ENV)->map(function($value, $key) {
+        return [$key => $value];
+    });
 
-        return response()->json(env()->all());
+    // Возвращаем их в виде JSON
+    return response()->json($envVariables);
 });
