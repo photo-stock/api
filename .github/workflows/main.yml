@@ -44,12 +44,12 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          SESSION_DRIVER: database
-          SESSION_LIFETIME: 1
-          SESSION_ENCRYPT: 'false'
-          SESSION_PATH: /
-          SESSION_DOMAIN: '217.18.60.27'
-          SANCTUM_STATEFUL_DOMAINS: '217.18.60.27,217.18.60.27:8080'
+          SESSION_DRIVER: ${{ secrets.SESSION_DRIVER }}
+          SESSION_LIFETIME: ${{ secrets.SESSION_LIFETIME }}
+          SESSION_ENCRYPT: ${{ secrets.SESSION_ENCRYPT }}
+          SESSION_PATH: ${{ secrets.SESSION_PATH }}
+          SESSION_DOMAIN: ${{ secrets.SESSION_DOMAIN }}
+          SANCTUM_STATEFUL_DOMAINS: ${{ secrets.SANCTUM_STATEFUL_DOMAINS }}
         run: |
           echo "APP_KEY: $APP_KEY"
           echo "DB_DATABASE: $DB_DATABASE"
