@@ -48,6 +48,7 @@ jobs:
           SESSION_LIFETIME: ${{ secrets.SESSION_LIFETIME }}
           SESSION_DOMAIN: ${{ secrets.SESSION_DOMAIN }}
           SANCTUM_STATEFUL_DOMAINS: ${{ secrets.SANCTUM_STATEFUL_DOMAINS }}
+          APP_URL: ${{ secrets.APP_URL }}
         run: |
 
 

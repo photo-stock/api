@@ -46,6 +46,7 @@ services:
             - SESSION_DOMAIN=${SESSION_DOMAIN}
             - SESSION_LIFETIME=${SESSION_LIFETIME}
             - SANCTUM_STATEFUL_DOMAINS=${SANCTUM_STATEFUL_DOMAINS}
+            - APP_URL=${APP_URL}
         deploy:
             replicas: 1
             restart_policy:
