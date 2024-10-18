@@ -52,7 +52,6 @@ jobs:
         run: |
           echo "APP_KEY: $APP_KEY"
           echo "DB_DATABASE: $DB_DATABASE"
-          echo "SESSION_DRIVER: $SESSION_DRIVER"
           echo "Deploying stack..."
           docker context use remote
 

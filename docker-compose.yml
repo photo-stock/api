@@ -28,8 +28,8 @@ services:
        # ports:
         #    - "9000:9000"
         volumes:
-            - app_storage:/var/www/storage
-            - app_cache:/var/www/bootstrap/cache
+            - app_storage:/var/www/html/storage
+            - app_cache:/var/www/html/bootstrap/cache
         networks:
             - api_network
         environment:
@@ -42,7 +42,7 @@ services:
             - DB_DATABASE=${DB_DATABASE}
             - DB_USERNAME=${DB_USERNAME}
             - DB_PASSWORD=${DB_PASSWORD}
-            - SESSION_DRIVER=${SESSION_DRIVER}
+
         deploy:
             replicas: 1
             restart_policy:
