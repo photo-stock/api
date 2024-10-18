@@ -53,6 +53,11 @@ jobs:
         run: |
           echo "APP_KEY: $APP_KEY"
           echo "DB_DATABASE: $DB_DATABASE"
+          echo "DB_USERNAME: $DB_USERNAME"
+          echo "SESSION_DRIVER: $SESSION_DRIVER",
+          echo "SESSION_PATH: $SESSION_PATH",
+          echo "SESSION_DOMAIN: $SESSION_DOMAIN",
+          echo "SANCTUM_STATEFUL_DOMAINS: $SANCTUM_STATEFUL_DOMAINS",
           echo "Deploying stack..."
           docker context use remote
 
