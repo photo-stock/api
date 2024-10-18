@@ -42,7 +42,10 @@ services:
             - DB_DATABASE=${DB_DATABASE}
             - DB_USERNAME=${DB_USERNAME}
             - DB_PASSWORD=${DB_PASSWORD}
-
+            - SESSION_DRIVER=${SESSION_DRIVER}
+            - SESSION_DOMAIN=${SESSION_DOMAIN}
+            - SESSION_LIFETIME=${SESSION_LIFETIME}
+            - SANCTUM_STATEFUL_DOMAINS=${SANCTUM_STATEFUL_DOMAINS}
         deploy:
             replicas: 1
             restart_policy:

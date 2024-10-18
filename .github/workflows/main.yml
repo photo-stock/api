@@ -46,18 +46,11 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           SESSION_DRIVER: ${{ secrets.SESSION_DRIVER }}
           SESSION_LIFETIME: ${{ secrets.SESSION_LIFETIME }}
-          SESSION_ENCRYPT: ${{ secrets.SESSION_ENCRYPT }}
-          SESSION_PATH: ${{ secrets.SESSION_PATH }}
           SESSION_DOMAIN: ${{ secrets.SESSION_DOMAIN }}
           SANCTUM_STATEFUL_DOMAINS: ${{ secrets.SANCTUM_STATEFUL_DOMAINS }}
         run: |
-          echo "APP_KEY: $APP_KEY"
-          echo "DB_DATABASE: $DB_DATABASE"
-          echo "DB_USERNAME: $DB_USERNAME"
-          echo "SESSION_DRIVER: $SESSION_DRIVER",
-          echo "SESSION_PATH: $SESSION_PATH",
-          echo "SESSION_DOMAIN: $SESSION_DOMAIN",
-          echo "SANCTUM_STATEFUL_DOMAINS: $SANCTUM_STATEFUL_DOMAINS",
+
+
           echo "Deploying stack..."
           docker context use remote
 
