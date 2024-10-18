@@ -19,7 +19,7 @@ COPY . .
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-RUN chown -R www-data:wwwdata /var/www  && chmod -R 755 /var/www  && chmod -R 755 /var/www/storage && chomd -R 775 /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www && chmod -R 755 /var/www/storage && chmod -R 775 /var/www/bootstrap/cache
 
 RUN php artisan config:cache && php artisan route:cache
 
