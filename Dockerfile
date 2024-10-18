@@ -25,7 +25,6 @@ RUN chown -R www-data:www-data /var/www \
     && chmod -R 777 /var/www/html/storage/framework/sessions
 
 
-RUN php artisan config:cache && php artisan route:cache
 
 RUN php artisan migrate --force
 
