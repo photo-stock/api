@@ -7,3 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/env', function () {
+
+        return response()->json(env());
+});
