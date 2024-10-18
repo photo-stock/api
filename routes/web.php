@@ -9,5 +9,5 @@ Route::get('/', function () {
 
 Route::get('/env', function () {
 
-        return response()->json(env());
+        return response()->json(env()->all());
 });
