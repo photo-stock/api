@@ -1,27 +1,32 @@
-version: '3.8'
+name: "photo-stack-dev"
 
 services:
   mysql:
-    image: mysql:8.0
-    container_name: laravel_mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: laravel_apin
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: root_password
-    volumes:
-      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - mysql_local_data:/var/lib/mysql
     networks:
-      - laravel_network
+      - api_network
+
 
 
 networks:
-  laravel_network:
+  api_network:
     driver: bridge
 
 volumes:
-  mysql_data:
-    driver: local
+  mysql_local_data:
