@@ -10,14 +10,12 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 COPY . .
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www && chmod -R 755 /var/www/storage && chmod -R 775 /var/www/bootstrap/cache
 
