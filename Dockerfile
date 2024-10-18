@@ -18,7 +18,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 COPY . .
 
 
-RUN chown -R www-data:www-data /var/www/html  && chmod -R 755 /var/www/html  && chmod -R 755 /var/www/html/storage && chomd -R 775 /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html  && chmod -R 755 /var/www/html  && chmod -R 755 /var/www/html/storage && chmod -R 775 /var/www/html/bootstrap/cache
 
 RUN php artisan config:cache && php artisan route:cache
 
