@@ -56,7 +56,7 @@ jobs:
 
           echo "After remove old..."
 
-          docker stack deploy --prune -c docker-compose.yml photo-stack
+          docker stack deploy --prune -c docker-compose.prod.yml photo-stack
 
           # Wait for the stack to be fully deployed (optional)
           sleep 30
