@@ -58,15 +58,4 @@ jobs:
 
           docker stack deploy --prune -c docker-compose.prod.yml photo-stack
 
-          # Wait for the stack to be fully deployed (optional)
-          sleep 30
-
-          # Copy .env.production to the running container
-          CONTAINER_ID=$(docker ps -qf "name=YOUR_CONTAINER_NAME")
-          if [ -n "$CONTAINER_ID" ]; then
-            echo "Copying .env.production to container..."
-            docker cp .env.production $CONTAINER_ID:/var/www/html/.env
-          else
-            echo "Container not found. Skipping .env.production copy."
-          fi
 
