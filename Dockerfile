@@ -17,6 +17,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 COPY . .
 
+RUN ls -la
+
 COPY .env.production .env
 
 
