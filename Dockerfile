@@ -19,7 +19,7 @@ COPY . .
 
 RUN ls -la
 
-COPY .env.production .env
+#COPY .env.production .env
 
 
 RUN chown -R www-data:www-data /var/www \
