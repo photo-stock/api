@@ -39,26 +39,14 @@ jobs:
 
       - name: Deploy Backend with Docker Compose
         if: steps.push_api_image.conclusion == 'success'
-        env:
-          APP_KEY: ${{ secrets.APP_KEY }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          SESSION_DRIVER: ${{ secrets.SESSION_DRIVER }}
-          SESSION_LIFETIME: ${{ secrets.SESSION_LIFETIME }}
-          SESSION_DOMAIN: ${{ secrets.SESSION_DOMAIN }}
-          SANCTUM_STATEFUL_DOMAINS: ${{ secrets.SANCTUM_STATEFUL_DOMAINS }}
-          APP_URL: ${{ secrets.APP_URL }}
         run: |
-
-
           echo "Deploying stack..."
           docker context use remote
 
           if docker stack ls | grep -q "photo-stack"; then
             echo "Stack exists. Removing..."
             docker stack remove photo-stack
-            else
+          else
             echo "No existing stack found. Proceeding to deploy new stack."
           fi
 
@@ -66,8 +54,19 @@ jobs:
           docker image prune -f
           docker volume prune -f
 
-           echo "After remove old..."
+          echo "After remove old..."
 
           docker stack deploy --prune -c docker-compose.yml photo-stack
 
+          # Wait for the stack to be fully deployed (optional)
+          sleep 30
+
+          # Copy .env.production to the running container
+          CONTAINER_ID=$(docker ps -qf "name=YOUR_CONTAINER_NAME")
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Copying .env.production to container..."
+            docker cp .env.production $CONTAINER_ID:/var/www/html/.env
+          else
+            echo "Container not found. Skipping .env.production copy."
+          fi
 

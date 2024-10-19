@@ -4,6 +4,8 @@ services:
     mysql:
         image: mysql:8.0
         restart: unless-stopped
+        env_file:
+            - .env
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_USER: ${DB_USERNAME}
@@ -25,36 +27,20 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-       # ports:
-        #    - "9000:9000"
         volumes:
             - app_storage:/var/www/html/storage
             - app_cache:/var/www/html/bootstrap/cache
         networks:
             - api_network
-        environment:
-            - APP_ENV=development
-            - APP_DEBUG=true
-            - APP_KEY=${APP_KEY}
-            - DB_CONNECTION=mysql
-            - DB_HOST=mysql
-            - DB_PORT=3306
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_USERNAME=${DB_USERNAME}
-            - DB_PASSWORD=${DB_PASSWORD}
-            - SESSION_DRIVER=${SESSION_DRIVER}
-            - SESSION_ENCRYPT=false
-            - SESSION_PATH=/
-            - SESSION_DOMAIN=${SESSION_DOMAIN}
-            - SESSION_LIFETIME=${SESSION_LIFETIME}
-            - SANCTUM_STATEFUL_DOMAINS=${SANCTUM_STATEFUL_DOMAINS}
-            - APP_URL=${APP_URL}
+        env_file:
+            - .env
         deploy:
             replicas: 1
             restart_policy:
                 condition: on-failure
         depends_on:
             - mysql
+
     nginx:
         image: alonecat/photo-stock-nginx-1:latest
         deploy:
@@ -71,7 +57,6 @@ services:
             retries: 3
             start_period: 30s
             timeout: 10s
-
 
 networks:
     api_network:
